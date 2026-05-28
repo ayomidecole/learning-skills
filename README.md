@@ -75,3 +75,7 @@ New skills should be:
 - packaged as `skills/<skill-name>/SKILL.md`
 
 Add the new skill to the table above with a plain-language description of when to use it.
+
+## Contributing
+
+Contributions are welcome, but all pull requests should go through the repository owner for now. Open an issue or PR with the proposed skill or change, and wait for review before assuming it will be merged.
