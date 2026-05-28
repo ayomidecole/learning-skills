@@ -1,65 +1,77 @@
 # Learning Skills
 
-Learning Skills is a small library of portable agent instruction skills for learning with AI agents.
+Reusable `SKILL.md` instructions for turning AI coding agents into better learning partners.
 
-The goal is to make AI coding agents better teachers: more deliberate, more project-based, more willing to let the learner build by hand, and less likely to rush straight into implementation.
+These skills are meant for project-based learning: the agent teaches, guides, reviews, and debugs while the learner stays actively involved in the work.
 
-## Skills
+## Available Skills
 
-| Skill | Description |
+| Skill | Use it when |
 | --- | --- |
-| [`build-by-learning`](skills/build-by-learning/SKILL.md) | A generic apprenticeship-style teaching protocol for learning technical topics through projects. It makes the agent act as teacher, guide, reviewer, and debugger while the user remains the primary implementer. |
+| [`build-by-learning`](skills/build-by-learning/SKILL.md) | You want to learn a technical topic by building a real project step by step, with the agent acting as teacher and reviewer instead of quietly doing all the work. |
 
-## Installation And Use
+## Quick Start
 
-Different agents use different names for persistent instructions. Codex can install this as a skill; most other coding agents should use the `SKILL.md` content as project instructions.
+The best default is to keep the skill in the repo where you are learning. That makes the teaching protocol visible, versioned, and easy to share with the same project.
 
-### Codex
-
-Copy any skill folder into your Codex skills directory:
+Copy the skill folder into your project:
 
 ```bash
-mkdir -p ~/.codex/skills
-cp -R skills/build-by-learning ~/.codex/skills/
+mkdir -p .agents/skills
+cp -R skills/build-by-learning .agents/skills/
 ```
 
-Then restart Codex or start a new session so the skill can be discovered.
+Then tell your agent to use it from your project instructions, for example in `AGENTS.md`:
 
-Invoke the skill by name in chat, or by slash command if your Codex surface exposes one:
+```md
+Use `.agents/skills/build-by-learning/SKILL.md` when I ask to learn a technical topic by building a project.
+```
+
+Start a session with:
 
 ```text
-Use build-by-learning. I want to learn LangChain agents by building a project step by step.
+Use build-by-learning. I want to learn LangChain agents by building a small project step by step.
 ```
 
-```text
-/build-by-learning I want to learn LangChain agents by building a project step by step.
-```
+## Agent Setup
 
-### Other Coding Agents
+Different agents discover persistent instructions differently. Use the most native option for your tool:
 
-Use the skill file through your agent's normal project-instructions format:
-
-| Agent | Where to put it |
+| Agent or setup | Recommended setup |
 | --- | --- |
-| Agents that read `AGENTS.md` | Copy or reference `skills/build-by-learning/SKILL.md` from `AGENTS.md`. |
-| Claude Code | Copy or reference it from `CLAUDE.md`. |
-| Agents with custom rules or project instructions | Paste the `SKILL.md` content there, or tell the agent to read the file. |
-| General chat agents | Paste, upload, or attach the `SKILL.md` file at the start of the session. |
+| Codex, personal reuse | Copy `skills/build-by-learning` to `${CODEX_HOME:-$HOME/.codex}/skills/build-by-learning`. |
+| Claude Code, project-local | Copy it to `.claude/skills/build-by-learning`. The skill can be invoked directly as `/build-by-learning` or triggered naturally by matching requests. |
+| Agents that read `AGENTS.md` | Keep the skill in the repo, then reference it from `AGENTS.md`. |
+| Agents with custom rules | Paste the `SKILL.md` content into project rules, or add the file to the repo and tell the agent to follow it. |
+| General chat agents | Upload, attach, or paste the `SKILL.md` file at the start of the session. |
 
-Example:
+For Codex global install:
 
-```text
-Follow skills/build-by-learning/SKILL.md as the teaching protocol. I want to learn Kubernetes deployments by building and deploying a small service.
+```bash
+mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+cp -R skills/build-by-learning "${CODEX_HOME:-$HOME/.codex}/skills/"
 ```
 
-## Progress Tracking
+Restart Codex or start a new session so the skill can be discovered.
 
-The `build-by-learning` skill instructs the agent to create a gitignored local state file:
+## Repository Layout
 
 ```text
-.build-by-learning-state.md
+skills/
+  build-by-learning/
+    SKILL.md
 ```
 
-That file tracks the learning goal, curriculum, current step, completed steps, decisions, docs/resources used, and next action.
+Each skill is self-contained in its own folder. `SKILL.md` contains YAML frontmatter for discovery plus the instructions the agent should follow when the skill is active.
 
-It is intentionally local working memory, not public documentation.
+## Adding Skills
+
+New skills should be:
+
+- focused on one reusable learning workflow
+- useful across more than one project
+- written as instructions an agent can actually follow
+- concise enough to load into context without wasting attention
+- packaged as `skills/<skill-name>/SKILL.md`
+
+Add the new skill to the table above with a plain-language description of when to use it.
