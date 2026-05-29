@@ -29,14 +29,18 @@ When the skill is invoked for a new learning project:
 4. Clarify roles:
    - User writes important code by hand.
    - Codex teaches, assigns tasks, reviews, and debugs.
-5. Create or maintain a gitignored state file named `.build-by-learning-state.md`.
-6. Add `.build-by-learning-state.md` to `.gitignore` when working in a git repo.
+5. Choose or reuse a project-local state file path for this learning project.
+6. If working in a git repo, add that exact state file path to the project's `.gitignore` before creating or updating the state file.
+7. Verify the chosen state file path is ignored by git.
+8. Create or maintain the state file at the chosen path.
 
 If the user already has a repo or project, inspect the current files before assigning work.
 
 ## State File
 
-Use `.build-by-learning-state.md` as local working memory. Keep it concise and update it when steps, decisions, or status change.
+Use the project-local state file as working memory for the learning project. The state file path is chosen in the project using the skill, not by this skill library. Whatever path is chosen must always be gitignored before the file is created or updated.
+
+Keep the state file concise and update it when steps, decisions, or status change.
 
 Include:
 
